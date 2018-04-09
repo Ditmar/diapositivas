@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Tema 2 "Dinamica de Sistemas"</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../reveal.js/css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../reveal.js/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../reveal.js/css/print/pdf.css' : '../../reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Seminario de Sistemas</h1>
+					<h3>Docker y Docker-Compose</h3>
+					<p>
+						<small>Creado por <a href="http://hakim.se">Ing. Ditmar Castro Angulo</a> </small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Contenido</h2>
+					<ul>
+						<li>
+							1.- Que es Docker?
+						</li>
+						<li>
+							2. Como Instalar Docker
+						</li>
+						<li>
+							3. Como Instalar Docker-Compose
+						</li>
+						<li>
+							4. Levantar Node y MongoDB con docker compose
+						</li>
+						<li>
+							5. Creación de un primer servicio
+						</li>
+            <li>
+              6. Uso de Docker y comandos Básicos
+            </li>
+					</ul>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<img src="./img/apps.png" alt="">
+					</section>
+					<section>
+						<h2>Que es Docker</h2>
+            <img src="./img/docker.png" alt="" width="200">
+            <p>La idea detrás de Docker es crear contenedores ligeros y portables para las aplicaciones software que puedan ejecutarse en cualquier máquina con Docker instalado</p>
+					</section>
+					<section>
+						<h2>Ejemplo</h2>
+						<img src="./img/arquitectura.png" width="400" alt="">
+					</section>
+					<section>
+						<h2>Con Docker</h2>
+						<img src="./img/arquitectura2.png" width="400" alt="">
+					</section>
+					<section>
+						<h2>Estructura</h2>
+						<img src="./img/arq.jpg" width="600" alt="">
+
+					</section>
+					<section>
+						<h2>Funcionamiento</h2>
+						<img src="./img/vir.jpg" width="600" alt="">
+						<p>
+							Para que el contenedor funcione deberá tener las bibliotecas necesarias para la ejecución, así como ciertas dependencias, como algunas herramientas del sistema operativo.
+						</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Como Instalar Docker</h2>
+						<p>
+							Existen varias formas de instalar DOCKER.
+							esta tan solo es una de las muchas opciones que existen
+							<br>
+							Paso 1
+							<br>
+							<pre><code class="hljs">sudo apt-get update</code></pre>
+						</p>
+						<p>Actualizamos los respositorios en este caso de UBUNTU</p>
+					</section>
+					<section>
+						<h2>Como instalar Docker</h2>
+						<br>
+						Paso 2
+						<br>
+						<p>
+							Agregamos la llave del repositorio DOCKER
+						</p>
+						<pre><code class="hljs">sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D</code></pre>
+						Paso 3
+						<p>Agregamos el Repositorio APT</p>
+						<br>
+						<pre><code class="hljs">sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'</code></pre>
+
+					</section>
+					<section>
+						<h2>Como instalar Docker</h2>
+						<br>
+						Paso 4
+						<br>
+						<pre><code class="hljs">sudo apt-get update</code></pre>
+						<pre><code class="hljs">sudo apt-get install -y docker-engine</code></pre>
+
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Instalar Docker-compose</h2>
+						<p>
+							Antes de nada que es docker-compose
+						</p>
+						<p>
+							Es una herramienta que ayuda a la <b>Orquestación</b> si vale el termino,
+							ayuda a la <b>administración de aplicaciones</b> y nos ayuda a manejarlas
+							como si de una sola unidad se tratara.
+						</p>
+					</section>
+					<section data-background="#dddddd">
+						<h2>
+							Instalar Docker-compose
+						</h2>
+						<p>
+							Solo requiere dos archivos.
+							<ul>
+								<li>
+									docker-compose.yml
+								</li>
+								<li>
+									Dockerfile
+								</li>
+							</ul>
+							<p></p>
+						</p>
+					</section>
+					<section data-background="#dddddd">
+						<h2>Instalacion</h2>
+						<pre><code class="hljs">sudo curl -L https://github.com/docker/compose/releases/download/1.20.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose</code></pre>
+						<pre><code class="hljs">sudo chmod +x /usr/local/bin/docker-compose</code></pre>
+
+					</section>
+				</section>
+
+				<section data-background="#dddddd">
+					<h2>Montar Una Arquitectura DOCKER, con docker-compose</h2>
+					<p>
+						Que vamos hacer, montaremos una arquitectura completa de desarrollo
+						Montando una base de datos MONGO DB y NODEJS como servidor de aplicacion.
+					</p>
+					<img src="./img/arquitectura2.png" width="300" alt="">
+				</section>
+
+				<section data-background="#dddddd">
+					<h2>
+						Ejemplo y Caso de USO
+					</h2>
+					<p>Usaremos el contenedor de </p>
+					<a href="https://github.com/Ditmar/node-mongo-docker-compose">Fork de Albert Munoz</a>
+				</section>
+
+				<section id="transitions" data-background="#dddddd">
+					<h2>Comandos</h2>
+					<p>Lista los servicios que estan corriendo</p>
+					<pre><code class="hljs">docker ps</code></pre>
+					<pre><code class="hljs">docker ps -a</code></pre>
+					<p>
+						Levanta un contendor entero
+
+					</p>
+						<pre><code class="hljs">docker-compose up -d</code></pre>
+						<pre><code class="hljs">docker-compose up</code></pre>
+				</section>
+				<section data-background="#dddddd">
+					<h2>
+						Comandos
+					</h2>
+					<p>
+						Para el servidor
+					</p>
+					<pre><code class="hljs">docker-compose stop</code></pre>
+					<pre><code class="hljs">docker-compose restart {name}</code></pre>
+					<p>
+						Se puede ver los detalles del contenedor
+					</p>
+					<pre><code class="hljs">docker inspect {id}</code></pre>
+					<p>
+						Es posible ingresar al contendor
+					</p>
+					<pre><code class="hljs">docker exec -it {id} bash</code></pre>
+				</section>
+				<section data-background="#dddddd">
+					<h2>Comandos</h2>
+					<p>
+						Muestra todas las imagenes descargadas por docker
+					</p>
+					<pre><code class="hljs">docker images</code></pre>
+					<p>
+						Borra cualquier imagen que requieras
+					</p>
+					<pre><code class="hljs">docker rmi IMAGEN-ID</code></pre>
+				</section>
+				<section>
+					<h2>FIN</h2>
+				</section>
+				<section>
+					<h2>Export to PDF</h2>
+					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
+					<iframe data-src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../reveal.js/lib/js/head.min.js"></script>
+		<script src="../../reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../reveal.js/plugin/search/search.js', async: true },
+					{ src: '../../reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

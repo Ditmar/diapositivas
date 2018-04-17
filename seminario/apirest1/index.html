@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Tema 2 "Dinamica de Sistemas"</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../reveal.js/css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../reveal.js/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../reveal.js/css/print/pdf.css' : '../../reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Seminario de Sistemas</h1>
+					<h3>API REST</h3>
+					<p>
+						<small>Creado por <a href="http://hakim.se">Ing. Ditmar Castro Angulo</a> </small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Contenido</h2>
+					<ul>
+						<li>
+							1.- Que es?
+						</li>
+						<li>
+							2. Uso Correcto de URIS
+						</li>
+						<li>
+							3. HTTP, Metodos, Códigos de estado, Aceptación de tipos de contenido
+						</li>
+						<li>
+							4. Hypermedia
+						</li>
+						<li>
+							5. Creación de un primer servicio
+						</li>
+            <li>
+              6. Conclusión, recomendaciones
+            </li>
+					</ul>
+				</section>
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>Que es un API REST</h2>
+            <img src="./img/apirest.png" alt="" width="100">
+						<p>REST, REpresentational State Transfer, es un tipo de arquitectura de desarrollo web que se apoya totalmente en el estándar HTTP.</p>
+						<p>
+							REST nos permite crear servicios y aplicaciones que pueden ser usadas por cualquier dispositivo o cliente que entienda HTTP, por lo que es increíblemente más simple y convencional que otras alternativas que se han usado en los últimos diez años como SOAP y XML-RPC.
+						</p>
+					</section>
+					<section>
+						<img src="./img/roy_fielding_sq.jpg" width="200" alt="">
+						<p>
+							REST se definió en el 2000 por Roy Fielding, coautor principal también de la especificación HTTP. Podríamos considerar REST como un framework para construir aplicaciones web respetando HTTP.
+						</p>
+						<a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf">Work</a>
+					</section>
+					<section>
+						<h2>Niveles de calidad para rest</h2>
+						<p>
+							Existen tres niveles de calidad a la hora de aplicar REST en el desarrollo de una aplicación web y más concretamente una API que se recogen en un modelo llamado Richardson Maturity Model en honor al tipo que lo estableció, Leonard Richardson padre de la arquitectura orientada a recursos. Estos niveles son:
+						</p>
+					</section>
+					<section>
+						<h2>Niveles de calidad para rest</h2>
+						<ul>
+							<li>
+								Uso correcto de URIs
+							</li>
+							<li>
+								Uso correcto de HTTP.
+							</li>
+							<li>
+								Implementar Hypermedia.
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Otra cosa mas</h2>
+						<p>
+							Además de estas tres reglas, nunca se debe guardar estado en el servidor, toda la información que se requiere para mostrar la información que se solicita debe estar en la consulta por parte del cliente.
+						</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>2. Uso Correcto de URIS</h2>
+						<p>
+							Cuando desarrollamos una web o una aplicación web, las URLs nos permiten acceder a cada uno de las páginas, secciones o documentos del sitio web.
+						</p>
+						<br>
+						<p>
+							Cada página, información en una sección, archivo, cuando hablamos de REST, los nombramos como <b>recursos</b>.
+						</p>
+					</section>
+					<section>
+						<h2>
+							Estructura de una URL
+						</h2>
+						<pre><code  data-trim data-noescape>{protocolo}://{dominio o hostname}[:puerto (opcional)]/</code></pre>
+						<pre><code>{ruta del recurso}?{consulta de filtrado}</code> </pre>
+
+					</section>
+					<section>
+							<h2>Ejemplo</h2>
+							<p>
+								Por ejemplo, http://reureka.com/2013/conceptos-sobre-apis-rest/ .
+							</p>
+					</section>
+					<section>
+							<h2>Consideraciones</h2>
+							<ul>
+								<li>Los nombres de URI no deben implicar una acción, por lo tanto debe evitarse usar verbos en ellos.</li>
+								<li>Deben ser únicas, no debemos tener más de una URI para identificar un mismo recurso.</li>
+								<li>Deben ser independiente de formato.</li>
+								<li>Deben mantener una jerarquía lógica.</li>
+								<li>Los filtrados de información de un recurso no se hacen en la URI. "Identificador de recursos Uniforme"</li>
+							</ul>
+					</section>
+					<section>
+						<h2>Ejemplo</h2>
+						<pre><code>/facturas/orden/desc/fecha-desde/2007/pagina/2 </code></pre>
+
+						<pre><code>/facturas?fecha-desde=2007&orden=DESC&pagina=2</code></pre>
+					</section>
+					<section>
+						<h2>Ejemplo</h2>
+					 <span>Incorrecto</span>
+						<pre><code>/facturas/orden/desc/fecha-desde/2007/pagina/2 </code></pre>
+						<span>Correcto</span>
+						<pre><code>/facturas?fecha-desde=2007&orden=DESC&pagina=2</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>HTTP</h2>
+						<p>
+							Es muy importante conocer el protocolo HTTP
+						</p>
+						<ul>
+							<li><a href="https://www.w3.org/Protocols/rfc2616/rfc2616.html">RFC</a></li>
+							<li><a href="http://shop.oreilly.com/product/9781565925090.do">O'Reilly</a></li>
+						</ul>
+					</section>
+					<section data-background="#dddddd">
+						<h2>
+							Para dominar este protocolo a que conocer
+						</h2>
+						<ul>
+							<li>Métodos HTTP</li>
+							<li>Códigos de estado</li>
+							<li>Aceptación de tipos de contenido</li>
+						</ul>
+					</section>
+					<section data-background="#dddddd">
+						<h2>Metodos</h2>
+						<ul>
+							<li>GET: Para consultar y leer recursos</li>
+							<li>POST: Para crear recursos</li>
+							<li>PUT: Para editar recursos</li>
+							<li>DELETE: Para eliminar recursos.</li>
+							<li>PATCH: Para editar partes concretas de un recurso.</li>
+						</ul>
+					</section>
+					<section>
+						<h2> EJEMPLO </h2>
+						<ul>
+							<li>GET /facturas Nos permite acceder al listado de facturas
+
+</li>
+							<li>POST /facturas Nos permite crear una factura nueva
+
+</li>
+							<li>GET /facturas/123 Nos permite acceder al detalle de una factura</li>
+							<li>PUT /facturas/123 Nos permite editar la factura, sustituyendo la totalidad de la información anterior por la nueva.</li>
+							<li>DELETE /facturas/123 Nos permite eliminar la factura</li>
+							<li>PATCH /facturas/123 Nos permite modificar cierta información de la factura, como el número o la fecha de la misma.</li>
+						</ul>
+					</section>
+					<section>
+							<h2>Codigos de estado</h2>
+							<p>Es importante conocer las respuestas del protocolo</p>
+							<p>Algo muy comun es generar nuestros propios codigos de estados, pero para que reinventar la rueda si tenemos un codigo de estado para cada tipo de situacion posible</p>
+							<a href="https://es.wikipedia.org/wiki/Anexo:C%C3%B3digos_de_estado_HTTP">Codigos de estado</a>
+					</section>
+					<section>
+							<h2>Ejemplo</h2>
+							<pre>
+								<code class="hljs" data-trim contenteditable>
+									Petición
+									========
+									PUT /facturas/123
+
+									Respuesta
+									=========
+									Status Code 200
+									Content:
+									{
+		  						success: false,
+		  						code:    734,
+		  						error:   "datos insuficientes"
+									}
+								</code>
+							</pre>
+							<p>Error Comun</p>
+
+					</section>
+					<section>
+							<pre>
+								<code class="hljs" data-trim contenteditable>
+									Petición
+	========
+	PUT /facturas/123
+
+	Respuesta
+	=========
+	Status Code 400
+	Content:
+	{
+	  message: "se debe especificar un id de cliente para la factura"
+	}
+								</code>
+							</pre>
+							<p>Correcto</p>
+					</section>
+					<section>
+						<h2>
+							Tipos y Formatos
+						</h2>
+						<p>
+							Cuando hablamos sobre URLs, vimos también que no era correcto indicar el tipo de formato de un recurso al cual queremos acceder o manipular.
+						</p>
+						<p>HTTP nos permite especificar en qué formato queremos recibir el recurso, pudiendo indicar varios en orden de preferencia, para ello utilizamos el header <b>Accept</b>.</p>
+					</section>
+					<section>
+						<h2>Ejemplo</h2>
+						<pre>
+							<code>
+								Petición
+========
+GET /facturas/123
+Accept: application/epub+zip , application/pdf, application/json
+
+Respuesta
+=========
+Status Code 200
+Content-Type: application/pdf
+							</code>
+						</pre>
+						<p>En la respuesta, se devolverá el header Content-Type, para que el cliente sepa qué formato se devuelve</p>
+
+					</section>
+				</section>
+
+				<section data-background="#dddddd">
+					<section>
+						<h2>Hypermedia</h2>
+						<p>
+							Con Hypermedia básicamente añadimos información extra al recurso sobre su conexión a otros recursos relacionados con él.
+						</p>
+					</section>
+					<section>
+						<h2>
+							Ejemplo
+						</h2>
+						<pre><code>
+<pedido>
+ <id>666</id>
+ <estado>Procesado</estado>
+ <links>
+   <link rel="factura">
+       http://example.com/api/pedido/666/factura
+   </link>
+ </links>
+</pedido>
+						</code></pre>
+					</section>
+				</section>
+
+				<section data-background="#dddddd">
+					<h2>
+					Creacion de un primer servicio CRUD
+					</h2>
+					<p>Sobre el servicio que tenemos montado con express instalamos los sigientes paquetes</p>
+					<ul>
+						<li>npm install mongoose</li>
+						<li>npm install decrypt</li>
+					</ul>
+				</section>
+
+				<section id="transitions" data-background="#dddddd">
+					<h2>Conexión</h2>
+					<pre>
+						<code>
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/salud");
+						</code>
+					</pre>
+				</section>
+				<section data-background="#dddddd">
+						<h2>Estructura</h2>
+						<pre>
+							<code>
+var userModel = {
+  name: String,
+  password: String,
+  registerDate: Date,
+  avatar: String
+}
+const user = mongoose.model("user", userModel);
+							</code>
+						</pre>
+				</section>
+				<section data-background="#dddddd">
+					<h2>Comandos</h2>
+					<p>
+						Muestra todas las imagenes descargadas por docker
+					</p>
+					<pre><code class="hljs">docker images</code></pre>
+					<p>
+						Borra cualquier imagen que requieras
+					</p>
+					<pre><code class="hljs">docker rmi IMAGEN-ID</code></pre>
+				</section>
+				<section>
+					<h2>FIN</h2>
+				</section>
+				<section>
+					<h2>Export to PDF</h2>
+					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
+					<iframe data-src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../reveal.js/lib/js/head.min.js"></script>
+		<script src="../../reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../reveal.js/plugin/search/search.js', async: true },
+					{ src: '../../reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../reveal.js/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
